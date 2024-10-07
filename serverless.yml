@@ -1,0 +1,38 @@
+app: serverless-larning
+service: serverless-larning
+frameworkVersion: '4'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+functions:
+  hello:
+    handler: src/example.handler
+    events:
+      - httpApi:
+          path: /hello
+          method: get
+  createUser:
+    handler: src/actions/user/create.handler
+    events:
+      - httpApi:
+          path: /users
+          method: post
+  listUsers:
+    handler: src/actions/user/list.handler
+    events:
+      - httpApi:
+          path: /users
+          method: get
+
+custom:
+  serverless-offline:
+    httpPort: 4000
+    lambdaPort: 4002
+    host: 127.0.0.1
+    noPrependStageInUrl: true
+
+plugins:
+  - serverless-offline
+    
